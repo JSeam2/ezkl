@@ -417,7 +417,7 @@ source .env/bin/activate
 pip install -r requirements.txt
 ```
 
-You can now build the package for development and enable python bindings.
+You can now build the package for development and enable python bindings. You will want to avoid using `cargo build --features python-bindings` as this will require you to manually link the various python libraries.
 ```bash
 maturin develop --features python-bindings
 ```

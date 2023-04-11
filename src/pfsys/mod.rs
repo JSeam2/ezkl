@@ -39,8 +39,7 @@ use pyo3::prelude::*;
 #[cfg(feature = "python-bindings")]
 use pyo3::types::PyDict;
 #[cfg(feature = "python-bindings")]
-use pyo3::ToPyObject;
-
+use numpy::PyArray;
 
 #[derive(thisError, Debug)]
 /// Errors related to pfsys
@@ -62,31 +61,20 @@ pub struct ModelInput {
     pub output_data: Vec<Vec<f32>>,
 }
 
-/// Truncates nested vector due to omit junk floating point values in python
 #[cfg(feature = "python-bindings")]
-fn truncate_nested_vector(input: &Vec<Vec<f32>>) -> Vec<Vec<f32>> {
-    let mut input_mut = input.clone();
-    for inner_vec in input_mut.iter_mut() {
-        for value in inner_vec.iter_mut() {
-            // truncate 6 decimal places
-            *value = (*value * 10000000.0).trunc() / 10000000.0;
-        }
-    }
-    input_mut
-}
-
-#[cfg(feature = "python-bindings")]
-impl ToPyObject for ModelInput {
-    fn to_object(&self, py: Python) -> PyObject {
-        // Create a Python dictionary
+impl ModelInput {
+    pub fn to_py_dict<'py>(&self, py: Python<'py>) -> Result<Py<PyDict>, PyErr> {
         let dict = PyDict::new(py);
-        let input_data_mut = &self.input_data;
-        let output_data_mut = &self.output_data;
-        dict.set_item( "input_data", truncate_nested_vector(&input_data_mut)).unwrap();
-        dict.set_item("input_shapes", &self.input_shapes).unwrap();
-        dict.set_item("output_data", truncate_nested_vector(&output_data_mut)).unwrap();
 
-        dict.to_object(py)
+        let input_data_array = PyArray::from_vec2(py, &self.input_data).unwrap();
+        let input_shapes_array = PyArray::from_vec2(py, &self.input_shapes).unwrap();
+        let output_data_array = PyArray::from_vec2(py, &self.output_data).unwrap();
+
+        dict.set_item("input_data", input_data_array)?;
+        dict.set_item("input_shapes", input_shapes_array)?;
+        dict.set_item("output_data", output_data_array)?;
+
+        Ok(dict)
     }
 }
 
