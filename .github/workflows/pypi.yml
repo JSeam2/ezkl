@@ -140,12 +140,12 @@ jobs:
 
             ;;
             armv7)
-              apt-get install -y --no-install-recommends python3.7 python3.7-pip gcc make gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-dev-armhf-cross libusb-1.0-0-dev libatomic1-armhf-cross
+              apt-get install -y --no-install-recommends python3.7 python3-pip gcc make gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-dev-armhf-cross libusb-1.0-0-dev libatomic1-armhf-cross
               pip3 install -U pip
             ;;
           esac
           ls
-          pip3 install -r requirements.txt
+          pip3 install -r $PWD/requirements.txt
         run: |
           maturin build --release --out dist --features python-bindings
           pip3 install ezkl_lib --no-index --find-links dist/ --force-reinstall
