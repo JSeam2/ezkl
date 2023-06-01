@@ -145,8 +145,9 @@ jobs:
             ;;
           esac
           ls
-          pip3 install -r $PWD/requirements.txt
+          pip3 install -r /home/runner/work/ezkl/ezkl/requirements.txt
         run: |
+          cd /home/runner/work/ezkl/ezkl
           maturin build --release --out dist --features python-bindings
           pip3 install ezkl_lib --no-index --find-links dist/ --force-reinstall
           python3 -c "import ezkl_lib"
