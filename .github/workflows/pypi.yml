@@ -119,16 +119,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include:
-          - arch: aarch64
-          - arch: armv7
+        target: [aarch64, armv7]
     steps:
     - uses: actions/checkout@v3
     - uses: uraimo/run-on-arch-action@v2.5.0
       name: Build
       id: build
       with:
-        arch: ${{ matrix.include.arch }}
+        arch: ${{ matrix.target }}
         distro: ubuntu20.04
         githubToken: ${{ github.token }}
         setup: |
