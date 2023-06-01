@@ -134,6 +134,7 @@ jobs:
         githubToken: ${{ github.token }}
         install: |
           apt-get update
+          apt-get install -y --no-install-recommends curl
           curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
           case "${{ matrix.target}}" in
             aarch64)
