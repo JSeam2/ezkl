@@ -129,6 +129,8 @@ jobs:
         arch: ${{ matrix.target }}
         distro: ubuntu20.04
         githubToken: ${{ github.token }}
+        dockerRunArgs: |
+            --volume "${PWD}:./"
         install: |
           apt-get update
           apt-get install -y --no-install-recommends curl
@@ -136,18 +138,14 @@ jobs:
           case "${{ matrix.target}}" in
             aarch64)
               apt-get install -y --no-install-recommends python3.7 python3-pip gcc make gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross libusb-1.0-0-dev libatomic1-arm64-cross
-              pip3 install -U pip
-
             ;;
             armv7)
               apt-get install -y --no-install-recommends python3.7 python3-pip gcc make gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-dev-armhf-cross libusb-1.0-0-dev libatomic1-armhf-cross
-              pip3 install -U pip
             ;;
           esac
           ls
-          pip3 install -r /home/runner/work/ezkl/ezkl/requirements.txt
+          pip3 install -r requirements.txt
         run: |
-          cd /home/runner/work/ezkl/ezkl
           maturin build --release --out dist --features python-bindings
           pip3 install ezkl_lib --no-index --find-links dist/ --force-reinstall
           python3 -c "import ezkl_lib"
