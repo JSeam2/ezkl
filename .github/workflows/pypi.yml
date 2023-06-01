@@ -154,6 +154,7 @@ jobs:
           pip3 install -r requirements.txt
           curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
           source $HOME/.cargo/env
+          cargo build --release --bin ezkl
           maturin build --release --out dist --features python-bindings
           pip3 install ezkl_lib --no-index --find-links dist/ --force-reinstall
           python3 -c "import ezkl_lib"
