@@ -119,7 +119,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target: [aarch64, armv7]
+        # omit armv7 for the time being due to some directory path lengths being too long
+        # target: [aarch64, armv7]
+        target: [aarch64]
     steps:
     - uses: actions/checkout@v3
     - uses: uraimo/run-on-arch-action@v2.5.0
