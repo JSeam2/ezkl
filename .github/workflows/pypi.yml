@@ -122,9 +122,6 @@ jobs:
         target: [aarch64, armv7]
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: 3.7
     - uses: uraimo/run-on-arch-action@v2.5.0
       name: Build
       id: build
@@ -138,15 +135,16 @@ jobs:
           curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
           case "${{ matrix.target}}" in
             aarch64)
-              apt-get install -y --no-install-recommends python3 python3-pip gcc make gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross libusb-1.0-0-dev libatomic1-arm64-cross
+              apt-get install -y --no-install-recommends python3.7 python3.7-pip gcc make gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross libusb-1.0-0-dev libatomic1-arm64-cross
               pip3 install -U pip
 
             ;;
             armv7)
-              apt-get install -y --no-install-recommends python3 python3-pip gcc make gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-dev-armhf-cross libusb-1.0-0-dev libatomic1-armhf-cross
+              apt-get install -y --no-install-recommends python3.7 python3.7-pip gcc make gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-dev-armhf-cross libusb-1.0-0-dev libatomic1-armhf-cross
               pip3 install -U pip
             ;;
           esac
+          ls
           pip3 install -r requirements.txt
         run: |
           maturin build --release --out dist --features python-bindings
