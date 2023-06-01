@@ -135,7 +135,7 @@ jobs:
           curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
           case "${{ matrix.target}}" in
             aarch64)
-              apt-get install -y --no-install-recommends python3.7 python3.7-pip gcc make gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross libusb-1.0-0-dev libatomic1-arm64-cross
+              apt-get install -y --no-install-recommends python3.7 python3-pip gcc make gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross libusb-1.0-0-dev libatomic1-arm64-cross
               pip3 install -U pip
 
             ;;
