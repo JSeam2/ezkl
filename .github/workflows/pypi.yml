@@ -130,7 +130,7 @@ jobs:
         distro: ubuntu20.04
         githubToken: ${{ github.token }}
         dockerRunArgs: |
-            --volume "${PWD}:./"
+            --volume "/home/runner/work/ezkl/ezkl:/build"
         install: |
           apt-get update
           apt-get install -y --no-install-recommends curl
@@ -144,8 +144,9 @@ jobs:
             ;;
           esac
           ls
-          pip3 install -r requirements.txt
+          pip3 install -r /build/requirements.txt
         run: |
+          cd /build
           maturin build --release --out dist --features python-bindings
           pip3 install ezkl_lib --no-index --find-links dist/ --force-reinstall
           python3 -c "import ezkl_lib"
