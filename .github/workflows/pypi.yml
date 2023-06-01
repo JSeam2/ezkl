@@ -122,10 +122,6 @@ jobs:
         target: [aarch64, armv7]
     steps:
     - uses: actions/checkout@v3
-    - name: Get directory
-      run: |
-        ls /home
-        ls /home/runner/work/ezkl/ezkl
     - uses: uraimo/run-on-arch-action@v2.5.0
       name: Build
       id: build
@@ -134,7 +130,7 @@ jobs:
         distro: ubuntu20.04
         githubToken: ${{ github.token }}
         dockerRunArgs: |
-            --volume "/home/runner/work/ezkl/ezkl:/build"
+            -v /home:/build
         install: |
           apt-get update
           apt-get install -y --no-install-recommends curl
