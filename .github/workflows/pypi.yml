@@ -137,7 +137,7 @@ jobs:
           apt-get update
           apt-get install -y --no-install-recommends curl git
 
-          curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
+          curl https://sh.rustup.rs -sSf | sh -s -- -y
           source $HOME/.cargo/env
           rustup override set nightly
           
