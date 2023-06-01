@@ -130,9 +130,9 @@ jobs:
         distro: ubuntu20.04
         githubToken: ${{ github.token }}
         setup: |
-          mkdir -p /home/dist
+          mkdir -p ${{ github.workspace }}/dist
         dockerRunArgs: |
-            -v /home/dist:/ezkl/dist
+            -v ${{ github.workspace }}/dist:/ezkl/dist
         install: |
           apt-get update
           apt-get install -y --no-install-recommends curl git
