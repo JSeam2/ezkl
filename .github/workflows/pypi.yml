@@ -138,20 +138,19 @@ jobs:
           apt-get install -y --no-install-recommends curl git
 
           curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
-          case "${{ matrix.target}}" in
+          source $HOME/.cargo/env
+          rustup override set nightly
+          
+          case "${{ matrix.target }}" in
             aarch64)
-              apt-get install -y --no-install-recommends python3.7 python3-pip gcc make gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross libusb-1.0-0-dev libatomic1-arm64-cross
+              apt-get install -y --no-install-recommends python3 python3-pip gcc make gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross libusb-1.0-0-dev libatomic1-arm64-cross
             ;;
             armv7)
-              apt-get install -y --no-install-recommends python3.7 python3-pip gcc make gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-dev-armhf-cross libusb-1.0-0-dev libatomic1-armhf-cross
+              apt-get install -y --no-install-recommends python3 python3-pip gcc make gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-dev-armhf-cross libusb-1.0-0-dev libatomic1-armhf-cross
             ;;
           esac
 
         run: |
-          ls -la /
-          ls -la /home
-          source /home/.cargo/env
-          rustup override set nightly
           git clone https://github.com/zkonduit/ezkl.git
           cd ezkl
           pip3 install -r requirements.txt
