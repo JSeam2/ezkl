@@ -148,6 +148,8 @@ jobs:
           esac
 
         run: |
+          source "$HOME/.cargo/env"
+          rustup override set nightly
           git clone https://github.com/zkonduit/ezkl.git
           cd ezkl
           pip3 install -r requirements.txt
