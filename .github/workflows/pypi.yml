@@ -138,10 +138,6 @@ jobs:
         install: |
           apt-get update
           apt-get install -y --no-install-recommends curl git ca-certificates
-
-          curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
-          source $HOME/.cargo/env
-          rustup override set nightly
           
           case "${{ matrix.target }}" in
             aarch64)
@@ -156,6 +152,7 @@ jobs:
           git clone https://github.com/zkonduit/ezkl.git
           cd ezkl
           pip3 install -r requirements.txt
+          curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
           source $HOME/.cargo/env
           maturin build --release --out dist --features python-bindings
           pip3 install ezkl_lib --no-index --find-links dist/ --force-reinstall
