@@ -148,7 +148,9 @@ jobs:
           esac
 
         run: |
-          source "$HOME/.cargo/env"
+          ls -la /
+          ls -la /home
+          source /home/.cargo/env
           rustup override set nightly
           git clone https://github.com/zkonduit/ezkl.git
           cd ezkl
