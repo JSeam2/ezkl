@@ -122,6 +122,10 @@ jobs:
         target: [aarch64, armv7]
     steps:
     - uses: actions/checkout@v3
+    - name: Get directory
+      run: |
+        ls /home
+        ls /home/runner/work/ezkl/ezkl
     - uses: uraimo/run-on-arch-action@v2.5.0
       name: Build
       id: build
