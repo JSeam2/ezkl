@@ -146,7 +146,7 @@ jobs:
       run: echo "/usr/aarch64-linux-gnu/include" >> $GITHUB_PATH
 
     - name: Update PATH armv7
-      if: matrix.target == "armv7"
+      if: matrix.target == 'armv7'
       run: echo "/usr/arm-linux-gnueabihf/include" >> $GITHUB_PATH
 
     - name: Build wheels
