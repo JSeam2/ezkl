@@ -130,16 +130,18 @@ jobs:
         python-version: 3.7
 
     - name: Setup env
-      run: echo "CROSS_COMPILE=${{ matrix.target }}-" >> $GITHUB_ENV
+      run: |
+        export PYO3_CROSS_INCLUDE_DIR="/usr/aarch64-linux-gnu/include"
+        export PYO3_CROSS_LIB_DIR="/usr/aarch64-linux-gnu/lib"
 
     - name: Install cross-compilation tools for aarch64
-      if: matrix.target == 'aarch64'
+      if: matrix.platform.arch == 'aarch64'
       run: |
         sudo apt-get update
         sudo apt-get install -y gcc make gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross libusb-1.0-0-dev libatomic1-arm64-cross
 
     - name: Update PATH aarch64
-      if: matrix.target == 'aarch64'
+      if: matrix.platform.target == 'aarch64'
       run: echo "/usr/aarch64-linux-gnu/include" >> $GITHUB_PATH
 
     - name: Build wheels
@@ -147,7 +149,7 @@ jobs:
       with:
         target: ${{ matrix.platform.arch }}
         manylinux: ${{ matrix.platform.manylinux }}
-        args: --release --out dist --features python-bindings
+        args: --release --target ${{ matrix.platform.target }} --out dist --features python-bindings
 
     - uses: uraimo/run-on-arch-action@v2.5.0
       name: Install built wheel
