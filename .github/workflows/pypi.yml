@@ -129,16 +129,19 @@ jobs:
       with:
         python-version: 3.8
 
-    - name: Setup env
-      run: |
-        echo "PYO3_CROSS_INCLUDE_DIR=/usr/aarch64-linux-gnu/include" >> $GITHUB_ENV
-        echo "PYO3_CROSS_LIB_DIR=/usr/aarch64-linux-gnu/lib" >> $GITHUB_ENV
+    # - name: Setup env
+    #   run: |
+    #     echo "PYO3_CROSS_INCLUDE_DIR=/usr/aarch64-linux-gnu/include" >> $GITHUB_ENV
+    #     echo "PYO3_CROSS_LIB_DIR=/usr/aarch64-linux-gnu/lib" >> $GITHUB_ENV
 
     # - name: Install cross-compilation tools for aarch64
     #   if: matrix.platform.arch == 'aarch64'
     #   run: |
     #     sudo apt-get update
     #     sudo apt-get install -y gcc make gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross
+
+    - name: Setup QEMU
+      uses: docker/setup-qemu-action@v1
 
     - name: Build wheels
       uses: PyO3/maturin-action@v1
