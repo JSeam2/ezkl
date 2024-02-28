@@ -10,6 +10,10 @@ build:
     python: "3.7"
     rust: "1.64"
 
+  commands:
+    - pip install maturin
+    - maturin develop --release --features python-bindings
+
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:
   configuration: docs/python/src/conf.py
